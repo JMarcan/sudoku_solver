@@ -7,8 +7,11 @@ column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
 unitlist = row_units + column_units + square_units
 
-# TODO: Update the unit list to add the new diagonal units
-unitlist = unitlist
+# Update the unit list to add the new diagonal units
+
+diagonale_left_top_down = [['A1', 'B2', 'C3', 'D4', 'E5', 'F6', 'G7', 'H8', 'I9']]
+diagonale_left_bottom_up = [['I1', 'H2', 'G3', 'F4', 'E5', 'D6', 'C7', 'B8', 'A9']]
+unitlist = unitlist + diagonale_left_top_down + diagonale_left_bottom_up
 
 
 # Must be called after all units (including diagonals) are added to the unitlist
@@ -195,7 +198,6 @@ def solve(grid):
         The dictionary representation of the final sudoku grid or False if no solution exists.
     """
     values = grid2values(grid)
-    
     values = search(values)
 
     print ("Grid after search:")
@@ -206,14 +208,17 @@ def solve(grid):
 
 if __name__ == "__main__":
     diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
+    
     print ("Original grid:")
     display(grid2values(diag_sudoku_grid))
     result = solve(diag_sudoku_grid)
     print ("Result grid:")
     display(result)
 
-
-  
+    import PySudoku
+    PySudoku.play(grid2values(diag_sudoku_grid), result, history)
+    
+    '''
     try:
         import PySudoku
         PySudoku.play(grid2values(diag_sudoku_grid), result, history)
@@ -222,3 +227,5 @@ if __name__ == "__main__":
         pass
     except:
         print('We could not visualize your board due to a pygame issue. Not a problem! It is not a requirement.')
+        
+     '''
