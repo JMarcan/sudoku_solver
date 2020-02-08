@@ -50,17 +50,39 @@ def naked_twins(values):
     and because it is simpler (since the reduce_puzzle function already calls this
     strategy repeatedly).
 
-    See Also
-    --------
-    Pseudocode for this algorithm on github:
-    https://github.com/udacity/artificial-intelligence/blob/master/Projects/1_Sudoku/pseudocode.md
     """
-    # TODO: Implement this function!
+    for unit in unitlist:
     
+        for box in unit:
+            digits = []
+            for d in values[box]:
+                digits.append(d)
+        
+            # Stop with twin strategy if field has not exactly two values
+            if len(digits) != 2:
+                continue
+        
+            #find the twin
+            for peer in peers[box]:
+                if digits == values[peer]:
+                    #twin founds
+                    print("twins found box: {0} | peer: {1}".format(box, peer))
+                    values = eliminate_naked_twins_from_box(values, unit, digits, box, peer)
+                    break
+    return values
+
+def eliminate_naked_twins_from_box(values, unit, digits, box, peer):
+    """Apply the eliminate strategy to a Sudoku puzzle"""
     
-    raise NotImplementedError
-
-
+    for b in unit:
+        if b == box or b == peer:
+            continue
+        
+        values = values[b].replace(digits[0],'')
+        values = values[b].replace(digits[1],'')
+        
+    return values
+    
 def eliminate(values):
     """Apply the eliminate strategy to a Sudoku puzzle
 
@@ -138,6 +160,8 @@ def reduce_puzzle(values):
         values = eliminate(values)
         # Use the Only Choice Strategy
         values = only_choice(values)
+        # Use the Naked Twins Strategy
+        values = naked_twins(values)
         # Check how many boxes have a determined value, to compare
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
         # If no new values were added, stop the loop.
@@ -164,6 +188,9 @@ def search(values):
     """
     
     values = reduce_puzzle(values)
+    
+    print("After reduction grid:")
+    display(values)
     
     if values is False:
         return False ## Failed earlier
@@ -199,7 +226,7 @@ def solve(grid):
     """
     values = grid2values(grid)
     values = search(values)
-
+    
     print ("Grid after search:")
     display(values)
     
@@ -211,14 +238,12 @@ if __name__ == "__main__":
     
     print ("Original grid:")
     display(grid2values(diag_sudoku_grid))
+    
     result = solve(diag_sudoku_grid)
+    
     print ("Result grid:")
     display(result)
-
-    import PySudoku
-    PySudoku.play(grid2values(diag_sudoku_grid), result, history)
     
-    '''
     try:
         import PySudoku
         PySudoku.play(grid2values(diag_sudoku_grid), result, history)
@@ -227,5 +252,3 @@ if __name__ == "__main__":
         pass
     except:
         print('We could not visualize your board due to a pygame issue. Not a problem! It is not a requirement.')
-        
-     '''
