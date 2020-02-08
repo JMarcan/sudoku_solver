@@ -107,10 +107,6 @@ def eliminate(values):
         for peer in peers[box]:
             values[peer] = values[peer].replace(digit,'')
     return values
-    
-    
-    # TODO: Copy your code from the classroom to complete this function
-    #raise NotImplementedError
 
 
 def only_choice(values):
