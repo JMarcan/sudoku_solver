@@ -1,8 +1,9 @@
 # sudoku_solver
+![Sudoku](sudoku_diagonal.png)
 
 ## Project description
-In this project I've implemented an algorithm to solve diagonal sudoku.
 This project is one small step for man but could be a giant leap for mankind. In increasing our productivity as many people will not have to spend day by day with solving sudoku anymore.
+In this project I've implemented an algorithm to solve diagonal sudoku.
 
 First, the algorithm runs `Constraint Propagation`:
 - First, `elimination strategy` is applied. If a box has a value assigned, then none of the peers (in the given row, the column, and the subsquare) of that box can have the same value.
