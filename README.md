@@ -1,5 +1,4 @@
 # sudoku_solver
-![Sudoku](sudoku_diagonal.png)
 
 ## Project description
 This project is one small step for man but could be a giant leap for mankind. In increasing our productivity as many people will not have to spend day by day with solving sudoku anymore.
@@ -17,6 +16,8 @@ The output is solved diagonal sudoku grid
 
 ### About sudoku
 Sudoku consists of a 9x9 grid. The objective is to fill the grid with digits in such a way that each row, each column, and each of the 9 principal 3x3 subsquares contains all of the digits from 1 to 9. The detailed rules can be found for example [here](https://www.conceptispuzzles.com/index.aspx?uri=puzzle/sudoku/rules)
+
+![Sudoku](sudoku_diagonal.png)
 
 ## Usage
 - 1. Run `solutions.py`, the predefined sudoku will be solved
