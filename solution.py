@@ -17,7 +17,8 @@ unitlist = unitlist + diagonale_left_top_down + diagonale_left_bottom_up
 # Must be called after all units (including diagonals) are added to the unitlist
 units = extract_units(unitlist, boxes)
 peers = extract_peers(units, boxes)
-    
+
+   
 def naked_twins(values):
     """Eliminate values using the naked twins strategy.
 
@@ -36,40 +37,59 @@ def naked_twins(values):
     dict
         The values dictionary with the naked twins eliminated from peers
 
-    Notes
-    -----
-    Your solution can either process all pairs of naked twins from the input once,
-    or it can continue processing pairs of naked twins until there are no such
-    pairs remaining -- the project assistant test suite will accept either
-    convention. However, it will not accept code that does not process all pairs
-    of naked twins from the original input. (For example, if you start processing
-    pairs of twins and eliminate another pair of twins before the second pair
-    is processed then your code will fail the PA test suite.)
-
-    The first convention is preferred for consistency with the other strategies,
-    and because it is simpler (since the reduce_puzzle function already calls this
-    strategy repeatedly).
-
     """
-    for unit in unitlist:
+
+    # Process fields with exactly two values
+    twins = [box for box in values.keys() if len(values[box]) == 2]
+        
+    naked_twin = []
+
+    for box in twins:
+        for peer in peers[box]:
+            if values[box] == values[peer] and peer != box:
+                naked_twin.append((box, peer))
     
-        for box in unit:
-            digits = []
-            for d in values[box]:
-                digits.append(d)
+    # If there are no naked_twins stop the processing
+    if len(naked_twin) == 0:
+        return values
         
-            # Stop with twin strategy if field has not exactly two values
-            if len(digits) != 2:
-                continue
+  
+    # Eliminate naked twins as possibilities for their peers
+
+    for twin_one, twin_two in naked_twin:
         
-            #find the twin
-            for peer in peers[box]:
-                if digits == values[peer]:
-                    #twin founds
-                    print("twins found box: {0} | peer: {1}".format(box, peer))
-                    values = eliminate_naked_twins_from_box(values, unit, digits, box, peer)
-                    break
+        digit_one = values[twin_one][0]
+        digit_two = values[twin_one][1]
+    
+        # Row wise elimination
+        if twin_one[0] == twin_two[0]:
+            row_index = ord(twin_one[0]) - ord('A')
+            for element in row_units[row_index]:
+                if digit_one in values[element] and twin_one != element and twin_two != element:
+                    values[element] = values[element].replace(digit_one,'')
+                if digit_two in values[element] and twin_one != element and twin_two != element:
+                    values[element] = values[element].replace(digit_two,'')
+
+        # Column wise elimination
+        if twin_one[1] == twin_two[1]:
+            column_index = int(twin_one[1])-1
+            for element in column_units[column_index]:
+                if digit_one in values[element] and twin_one != element and twin_two != element:
+                    values[element] = values[element].replace(digit_one,'')
+                if digit_two in values[element] and twin_one != element and twin_two != element:
+                    values[element] = values[element].replace(digit_two,'')
+
+        # Square wise elimination
+        for square in square_units:
+            if twin_one in square and twin_two in square:
+                for element in square:
+                    if digit_one in values[element] and twin_one != element and twin_two!= element:
+                        values[element] = values[element].replace(digit_one,'')
+                    if digit_two in values[element] and twin_one != element and twin_two!= element:
+                        values[element] = values[element].replace(digit_two,'')
+        
     return values
+    
 
 def eliminate_naked_twins_from_box(values, unit, digits, box, peer):
     """Apply the eliminate strategy to a Sudoku puzzle"""
@@ -185,9 +205,6 @@ def search(values):
     
     values = reduce_puzzle(values)
     
-    print("After reduction grid:")
-    display(values)
-    
     if values is False:
         return False ## Failed earlier
     if all(len(values[s]) == 1 for s in boxes): 
@@ -222,10 +239,7 @@ def solve(grid):
     """
     values = grid2values(grid)
     values = search(values)
-    
-    print ("Grid after search:")
-    display(values)
-    
+
     return values
 
 
@@ -237,7 +251,7 @@ if __name__ == "__main__":
     
     result = solve(diag_sudoku_grid)
     
-    print ("Result grid:")
+    print ("Results grid:")
     display(result)
     
     try:
