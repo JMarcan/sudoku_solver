@@ -57,6 +57,9 @@ def naked_twins(values):
     # Eliminate naked twins as possibilities for their peers
 
     for twin_one, twin_two in naked_twin:
+         
+        if len(values[twin_one]) != 2:
+            return values
         
         digit_one = values[twin_one][0]
         digit_two = values[twin_one][1]
@@ -87,19 +90,6 @@ def naked_twins(values):
                         values[element] = values[element].replace(digit_one,'')
                     if digit_two in values[element] and twin_one != element and twin_two!= element:
                         values[element] = values[element].replace(digit_two,'')
-        
-    return values
-    
-
-def eliminate_naked_twins_from_box(values, unit, digits, box, peer):
-    """Apply the eliminate strategy to a Sudoku puzzle"""
-    
-    for b in unit:
-        if b == box or b == peer:
-            continue
-        
-        values = values[b].replace(digits[0],'')
-        values = values[b].replace(digits[1],'')
         
     return values
     
@@ -174,10 +164,10 @@ def reduce_puzzle(values):
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
         # Use the Eliminate Strategy
         values = eliminate(values)
-        # Use the Only Choice Strategy
-        values = only_choice(values)
         # Use the Naked Twins Strategy
         values = naked_twins(values)
+        # Use the Only Choice Strategy
+        values = only_choice(values)
         # Check how many boxes have a determined value, to compare
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
         # If no new values were added, stop the loop.
@@ -218,9 +208,6 @@ def search(values):
         attempt = search(new_sudoku)
         if attempt:
             return attempt
-        
-    return new_sudoku
-
 
 def solve(grid):
     """Find the solution to a Sudoku puzzle using search and constraint propagation
@@ -242,10 +229,11 @@ def solve(grid):
 
     return values
 
-
 if __name__ == "__main__":
     diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
-    
+        
+    diag_sudoku_grid = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
+
     print ("Original grid:")
     display(grid2values(diag_sudoku_grid))
     
