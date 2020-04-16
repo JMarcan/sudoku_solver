@@ -1,7 +1,9 @@
 # sudoku_solver
 
+## Project motivation
+This project is one small step for man but could be a giant leap for mankind. In increasing our productivity as many people will not have to spend day by day with solving sudoku anymore. I did this project as part of Udacity, Artificial Intelligence Nanodegree.
+
 ## Project description
-This project is one small step for man but could be a giant leap for mankind. In increasing our productivity as many people will not have to spend day by day with solving sudoku anymore.
 In this project, I've implemented an algorithm to solve diagonal sudoku.
 
 ![Sudoku](sudoku_diagonal.png)
@@ -23,7 +25,7 @@ Sudoku consists of a 9x9 grid. The objective is to fill the grid with digits in 
 
 ## Usage
 1. Run `solutions.py`, the predefined sudoku will be solved
-2. Assign your sudoku to variable `diag_sudoku_grid` in format  = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3' where `.` represents unknown fields
+2. Assign your sudoku to variable `diag_sudoku_grid` in format  = `2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3` where `.` represents unknown fields
 3. Run `solutions.py` for your sudoku
 4. Enjoy the free time you would otherwise spend by solving the sudoku yourself
 
