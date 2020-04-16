@@ -7,17 +7,17 @@ In this project, I've implemented an algorithm to solve diagonal sudoku.
 ![Sudoku](sudoku_diagonal.png)
 
 First, the algorithm runs `Constraint Propagation`:
-1. `Elimination strategy` is applied. If a box has a value assigned, then none of the peers (in the given row, the column, and the subsquare) of that box can have the same value.
-2. `Only-choice strategy` is applied. If only one box in a unit allows a certain digit, then that box is assigned that digits.
-3. Eliminate `naked-twins strategy` is applied. If we have two or more unallocated boxes in a unit and there are only two digits that can go in those two boxes, then those two digits can be eliminated from the possible assignments of all other boxes in the same unit.
+1. `Elimination strategy` is applied. If a box has a value assigned, then none of the peers (in the given row, the column, and the subsquare) of that box can have the same value
+2. `Only-choice strategy` is applied. If only one box in a unit allows a certain digit, then that box is assigned that digits
+3. Eliminate `naked-twins strategy` is applied. If we have two or more unallocated boxes in a unit and there are only two digits that can go in those two boxes, then those two digits can be eliminated from the possible assignments of all other boxes in the same unit
 4. Return to the first step on updated sudoku field (as long as there is a progress)
 
 Second, after the number of possible solutions were reduced (and search space), the `Depth First Search` is applied.
 
-The output is solved diagonal sudoku grid 
+The output is solved diagonal sudoku grid.
 
 ### About sudoku
-Sudoku consists of a 9x9 grid. The objective is to fill the grid with digits in such a way that each row, each column, and each of the 9 principal 3x3 subsquares contains all of the digits from 1 to 9. The detailed rules can be found for example [here](https://www.conceptispuzzles.com/index.aspx?uri=puzzle/sudoku/rules)
+Sudoku consists of a 9x9 grid. The objective is to fill the grid with digits in such a way that each row, each column, and each of the 9 principal 3x3 subsquares contains all of the digits from 1 to 9. The detailed rules can be found for example [here](https://www.conceptispuzzles.com/index.aspx?uri=puzzle/sudoku/rules).
 
 
 
